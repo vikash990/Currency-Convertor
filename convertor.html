@@ -1,0 +1,94 @@
+<html>
+  <head>
+  <script>
+    function convert(){
+      // console.log('Inside Convert!!!')
+			// alert("a");
+			var from =document.getElementById("from").value;
+			var to = document.getElementById("to").value;
+			var xmlhttp= new XMLHttpRequest();
+			var url="https://free.currencyconverterapi.com/api/v6/convert?q="+from+"_"+to+"&compact=ultra&apiKey=44bbef74df526f28aa0a";
+      // console.log(url)
+			xmlhttp.open("GET", url, true);//async
+			xmlhttp.send();
+			xmlhttp.onreadystatechange=function(){
+				if(this.readyState === 4 && this.status === 200 )
+				{
+					var result=this.responseText;
+					console.log(result);
+					var jsResult=JSON.parse(result);
+          var q = from+"_"+to;
+          console.log(q);
+          console.log(jsResult[q]);
+					// var one= jsResult.rates[to]/jsResult.rates[from];
+					// var amount=document.getElementById("from");
+          var amount = jsResult[q] * document.getElementById('from_VAL').value;
+          console.log(amount);
+
+					document.getElementById("to_VAL").value= amount;
+				}
+      }//http://api.fixer.io/latest?symbols=
+    } //https://free.currencyconverterapi.com/api/v6/convert
+  </script>
+</head>
+<body>
+  <div>
+    <h1>Currency Converter</h1>
+  </div>
+  <div class="container">
+
+  </div>
+  <div class="container">
+      <input type="text" value="0" name="from_VAL" id="from_VAL" placeholder="Enter amount" />
+      <button type="button" name="button" onclick="convert()"> Convert This!! </button>
+    <br>
+    <div class="medium-3 columns">
+      <select id="from" class="postfix">
+        <option value="AUD" >AUD</option>
+        <option value="AZN" >AZN</option>
+        <option value="BHD" >BHD</option>
+        <option value="CAD" >CAD</option>
+        <option value="CHF" >CHF</option>
+        <option value="EUR" >EUR</option>
+        <option value="GBP" >GBP</option>
+        <option value="INR" >INR</option>
+        <option value="JOD" >JOD</option>
+        <option value="KWD" >KWD</option>
+        <option value="KYD" >KYD</option>
+        <option value="OMR" >OMR</option>
+        <option value="USD" selected>USD</option>
+        <option value="UYU" >UYU</option>
+      </select>
+    </div>
+    <p style="text-align: center" > to</p>
+     <div class="medium-3 columns">
+       <select id="to" class="postfix">
+         <option value="AUD" >AUD</option>
+         <option value="AZN" >AZN</option>
+         <option value="BHD" >BHD</option>
+         <option value="CAD" >CAD</option>
+         <option value="CHF" >CHF</option>
+         <option value="EUR" >EUR</option>
+         <option value="GBP" >GBP</option>
+         <option value="INR" selected>INR</option>
+         <option value="JOD" >JOD</option>
+         <option value="KWD" >KWD</option>
+         <option value="KYD" >KYD</option>
+         <option value="OMR" >OMR</option>
+         <option value="USD">USD</option>
+         <option value="UYU" >UYU</option>
+       </select>
+    </div>
+    <br>
+    <div class="medium-3 columns">
+      <input type="text" id="to_VAL" readonly placeholder="get value" disabled style="background-color: #eee; font-weight: bold;" value=0 />
+    </div>
+  </div>
+  <script>
+    /*
+    <a href="https://www.exchange-rates.org/GetCustomContent.aspx?sid=CC000LW62&amp;type=CurrencyConverter&amp;stk=0J3LVC98V7" charset="utf-8">
+      Confusion???
+    </a> */
+  </script>
+</body>
+</html>
